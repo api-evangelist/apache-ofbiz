@@ -1,0 +1,35 @@
+aid: apache-ofbiz
+name: Apache OFBiz
+description: >-
+  Apache OFBiz is an open-source enterprise resource planning system with a suite of business applications for CRM, e-commerce, supply chain management, manufacturing, and more. It provides a service-oriented architecture with web service APIs.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - ERP
+  - CRM
+  - E-Commerce
+  - Business Applications
+created: '2026-03-16'
+modified: '2026-03-16'
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/apis.yml
+specificationVersion: '0.19'
+apis:
+  - aid: apache-ofbiz:apache-ofbiz
+    name: Apache OFBiz
+    description: >-
+      OFBiz provides REST and XML-RPC service APIs for ERP/CRM functions, an entity engine API for data access, a service engine API for business logic, and a widget framework API for UI customization.
+    humanURL: https://ofbiz.apache.org/documentation.html
+    tags:
+      - REST
+      - XML-RPC
+      - ERP
+      - Java
+    properties:
+      - type: Documentation
+        url: https://ofbiz.apache.org/documentation.html
+maintainers:
+  - FN: Kin Lane
+    email: info@apievangelist.com
