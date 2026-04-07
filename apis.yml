@@ -7,10 +7,10 @@ position: Consumer
 access: 3rd-Party
 image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - ERP
+  - Business Applications
   - CRM
   - E-Commerce
-  - Business Applications
+  - ERP
 created: '2026-03-16'
 modified: '2026-03-16'
 url: >-
@@ -23,10 +23,10 @@ apis:
       OFBiz provides REST and XML-RPC service APIs for ERP/CRM functions, an entity engine API for data access, a service engine API for business logic, and a widget framework API for UI customization.
     humanURL: https://ofbiz.apache.org/documentation.html
     tags:
-      - REST
-      - XML-RPC
       - ERP
       - Java
+      - REST
+      - XML-RPC
     properties:
       - type: Documentation
         url: https://ofbiz.apache.org/documentation.html
