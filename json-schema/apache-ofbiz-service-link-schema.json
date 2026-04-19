@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-schema/apache-ofbiz-service-link-schema.json",
+  "title": "ServiceLink",
+  "description": "Hypermedia link to a service endpoint.",
+  "type": "object",
+  "properties": {
+    "href": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to invoke the service.",
+      "example": "https://localhost:8443/rest/services/findProductById"
+    },
+    "rel": {
+      "type": "string",
+      "description": "Relationship type.",
+      "example": "self"
+    },
+    "type": {
+      "type": "string",
+      "description": "HTTP method for accessing the service.",
+      "example": "get"
+    }
+  }
+}

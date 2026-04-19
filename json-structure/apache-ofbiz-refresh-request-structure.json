@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-structure/apache-ofbiz-refresh-request-structure.json",
+  "name": "RefreshRequest",
+  "description": "Request body for token refresh.",
+  "type": "object",
+  "properties": {
+    "refresh_token": {
+      "type": "string",
+      "description": "The refresh token previously issued by /auth/token.",
+      "example": "dGhpc19pc19hX3JlZnJlc2hfdG9rZW4"
+    }
+  },
+  "required": [
+    "refresh_token"
+  ]
+}

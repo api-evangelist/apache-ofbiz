@@ -1,0 +1,204 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: Apache OFBiz
+  description: Unified vocabulary mapping the operational (OpenAPI) and capability (Naftiko) dimensions of the Apache OFBiz REST API.
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+operational:
+  apis:
+    - name: Apache OFBiz REST API
+      namespace: ofbiz
+      version: "18.12"
+      baseUrl: https://localhost:8443/rest
+      status: active
+      description: REST API exposing OFBiz services via JWT-authenticated endpoints.
+
+  resources:
+    - name: authentication
+      description: JWT token acquisition and refresh for API access.
+      apis:
+        - ofbiz
+      actions:
+        - create
+        - refresh
+
+    - name: services
+      description: Exported OFBiz services available for invocation via REST.
+      apis:
+        - ofbiz
+      actions:
+        - list
+        - invoke-get
+        - invoke-post
+
+  actions:
+    - name: list
+      description: Retrieve all exported services.
+      httpMethod: GET
+      pattern: read
+
+    - name: invoke-get
+      description: Invoke a service via GET with URL-encoded parameters.
+      httpMethod: GET
+      pattern: read
+
+    - name: invoke-post
+      description: Invoke a service via POST with JSON body.
+      httpMethod: POST
+      pattern: write
+
+    - name: create
+      description: Create a resource (token acquisition).
+      httpMethod: POST
+      pattern: write
+
+    - name: refresh
+      description: Refresh an access token.
+      httpMethod: POST
+      pattern: write
+
+  schemas:
+    authentication:
+      - name: TokenData
+        description: JWT access and refresh token data returned after authentication.
+      - name: TokenResponse
+        description: Standard API response wrapping token data.
+      - name: RefreshRequest
+        description: Request body for refreshing a JWT token.
+
+    services:
+      - name: ServiceEntry
+        description: A single exported OFBiz service with name, description, and invocation link.
+      - name: ServiceLink
+        description: Hypermedia link to a service endpoint with href, rel, and type.
+      - name: ServiceListResponse
+        description: API response containing a list of exported service entries.
+      - name: ServiceResponse
+        description: Generic service invocation response with statusCode, statusDescription, and data.
+
+  parameters:
+    identifiers:
+      - name: serviceName
+        description: Name of the OFBiz service to invoke.
+        type: string
+
+    filters:
+      - name: inParams
+        description: URL-encoded JSON string of service input parameters for GET invocations.
+        type: string
+
+  enums:
+    tokenTypes:
+      - Bearer
+
+    statusCodes:
+      - 200
+      - 400
+      - 401
+      - 404
+      - 500
+
+  authentication:
+    schemes:
+      - name: basicAuth
+        type: http
+        scheme: basic
+        description: HTTP Basic Auth used only for initial token acquisition at /auth/token.
+      - name: bearerAuth
+        type: http
+        scheme: bearer
+        bearerFormat: JWT
+        description: JWT Bearer token required for all service endpoints.
+
+capability:
+  workflows:
+    - name: Apache OFBiz ERP Operations
+      file: capabilities/apache-ofbiz-erp-operations.yaml
+      description: End-to-end ERP workflow covering authentication and OFBiz service invocation.
+      apisUsed:
+        - Apache OFBiz REST API
+      toolCount: 5
+      personas:
+        - ERP Administrator
+        - Integration Engineer
+      domains:
+        - Enterprise Resource Planning
+        - Business Process Automation
+
+  personas:
+    - id: erp-administrator
+      name: ERP Administrator
+      description: Administrators who configure and manage OFBiz ERP modules and business processes.
+      workflows:
+        - Apache OFBiz ERP Operations
+
+    - id: integration-engineer
+      name: Integration Engineer
+      description: Engineers integrating external systems with OFBiz via the REST API.
+      workflows:
+        - Apache OFBiz ERP Operations
+
+  domains:
+    - name: Enterprise Resource Planning
+      description: Integrated management of core business processes including finance, HR, supply chain, and manufacturing.
+      resources:
+        - services
+        - authentication
+
+    - name: Business Process Automation
+      description: Automated execution of OFBiz business logic services via REST API calls.
+      resources:
+        - services
+
+  namespaces:
+    - type: consumed
+      name: ofbiz
+      baseUri: https://localhost:8443/rest
+
+    - type: rest-exposed
+      name: ofbiz-erp-api
+      port: 8080
+
+    - type: mcp-exposed
+      name: ofbiz-erp-mcp
+      port: 9090
+
+  binds:
+    - name: OFBIZ_USERNAME
+      description: OFBiz userLogin for Basic Auth token acquisition.
+      workflows:
+        - Apache OFBiz ERP Operations
+
+    - name: OFBIZ_PASSWORD
+      description: OFBiz password for Basic Auth token acquisition.
+      workflows:
+        - Apache OFBiz ERP Operations
+
+    - name: OFBIZ_TOKEN
+      description: JWT Bearer token for OFBiz REST API authentication.
+      workflows:
+        - Apache OFBiz ERP Operations
+
+crossReference:
+  - resource: authentication
+    operations:
+      - get-token
+      - refresh-token
+    workflows:
+      - Apache OFBiz ERP Operations
+    personas:
+      - ERP Administrator
+      - Integration Engineer
+
+  - resource: services
+    operations:
+      - list-services
+      - invoke-service-get
+      - invoke-service-post
+    workflows:
+      - Apache OFBiz ERP Operations
+    personas:
+      - ERP Administrator
+      - Integration Engineer

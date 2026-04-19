@@ -1,0 +1,158 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: Apache OFBiz REST API
+  description: Shared capability definition for the Apache OFBiz REST API covering JWT authentication and OFBiz service invocation.
+  tags:
+    - Apache OFBiz
+    - ERP
+    - Business Applications
+    - REST
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      OFBIZ_USERNAME: OFBIZ_USERNAME
+      OFBIZ_PASSWORD: OFBIZ_PASSWORD
+
+capability:
+  consumes:
+    - type: http
+      namespace: ofbiz
+      baseUri: https://localhost:8443/rest
+      description: Apache OFBiz REST API for invoking exported OFBiz services via JWT authentication.
+      authentication:
+        type: bearer
+        token: "{{OFBIZ_TOKEN}}"
+      resources:
+        - name: authentication
+          path: /auth
+          description: JWT token acquisition and refresh.
+          operations:
+            - name: get-token
+              method: POST
+              description: Obtain JWT access token using Basic Auth credentials.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: refresh-token
+              method: POST
+              description: Refresh JWT access token using a refresh token.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  refresh_token: "{{tools.refreshToken}}"
+
+        - name: services
+          path: /services
+          description: List and invoke exported OFBiz services.
+          operations:
+            - name: get-services
+              method: GET
+              description: List all exported OFBiz REST services.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: invoke-service-get
+              method: GET
+              description: Invoke an OFBiz service via GET with URL-encoded JSON parameters.
+              inputParameters:
+                - name: serviceName
+                  in: path
+                  type: string
+                  required: true
+                  description: Name of the OFBiz service to invoke.
+                - name: inParams
+                  in: query
+                  type: string
+                  required: false
+                  description: URL-encoded JSON string of service input parameters.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: invoke-service-post
+              method: POST
+              description: Invoke an OFBiz service via POST with JSON request body.
+              inputParameters:
+                - name: serviceName
+                  in: path
+                  type: string
+                  required: true
+                  description: Name of the OFBiz service to invoke.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data: {}
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: apache-ofbiz-api
+      resources:
+        - path: /v1/auth/token
+          name: auth-token
+          description: JWT token management.
+          operations:
+            - method: POST
+              name: get-token
+              description: Obtain JWT access token.
+              call: "ofbiz.get-token"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/services
+          name: services
+          description: OFBiz service discovery and invocation.
+          operations:
+            - method: GET
+              name: list-services
+              description: List all exported OFBiz services.
+              call: "ofbiz.get-services"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: apache-ofbiz-mcp
+      transport: http
+      tools:
+        - name: list-services
+          description: List all OFBiz services exported via the REST plugin.
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "ofbiz.get-services"
+          outputParameters:
+            - type: object
+              mapping: "$."
+
+        - name: invoke-service
+          description: Invoke an OFBiz service by name with JSON parameters via POST.
+          hints:
+            readOnly: false
+            openWorld: true
+          call: "ofbiz.invoke-service-post"
+          with:
+            serviceName: "tools.serviceName"
+          outputParameters:
+            - type: object
+              mapping: "$."

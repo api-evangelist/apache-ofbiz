@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-schema/apache-ofbiz-refresh-request-schema.json",
+  "title": "RefreshRequest",
+  "description": "Request body for token refresh.",
+  "type": "object",
+  "properties": {
+    "refresh_token": {
+      "type": "string",
+      "description": "The refresh token previously issued by /auth/token.",
+      "example": "dGhpc19pc19hX3JlZnJlc2hfdG9rZW4"
+    }
+  },
+  "required": [
+    "refresh_token"
+  ]
+}

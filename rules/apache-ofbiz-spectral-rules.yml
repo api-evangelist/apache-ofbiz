@@ -1,0 +1,284 @@
+# Apache OFBiz REST API Spectral Ruleset
+# Enforces conventions observed across the Apache OFBiz REST API OpenAPI specification.
+
+rules:
+
+  # INFO / METADATA
+  info-title-required:
+    description: OpenAPI info must have a title.
+    severity: error
+    given: "$.info"
+    then:
+      field: title
+      function: truthy
+
+  info-description-required:
+    description: OpenAPI info must have a description.
+    severity: warn
+    given: "$.info"
+    then:
+      field: description
+      function: truthy
+
+  info-version-required:
+    description: OpenAPI info must define a version.
+    severity: error
+    given: "$.info"
+    then:
+      field: version
+      function: truthy
+
+  info-contact-required:
+    description: OpenAPI info should include contact information.
+    severity: warn
+    given: "$.info"
+    then:
+      field: contact
+      function: truthy
+
+  info-license-required:
+    description: OpenAPI info should include license information.
+    severity: warn
+    given: "$.info"
+    then:
+      field: license
+      function: truthy
+
+  # OPENAPI VERSION
+  openapi-version-3:
+    description: Specs must use OpenAPI 3.x.
+    severity: error
+    given: "$"
+    then:
+      field: openapi
+      function: pattern
+      functionOptions:
+        match: "^3\\."
+
+  # SERVERS
+  servers-defined:
+    description: At least one server must be defined.
+    severity: error
+    given: "$"
+    then:
+      field: servers
+      function: truthy
+
+  servers-https:
+    description: Server URLs should use HTTPS.
+    severity: warn
+    given: "$.servers[*].url"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+
+  servers-description:
+    description: Each server should have a description.
+    severity: warn
+    given: "$.servers[*]"
+    then:
+      field: description
+      function: truthy
+
+  # OPERATIONS
+  operation-summary-required:
+    description: Every operation must have a summary.
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: summary
+      function: truthy
+
+  operation-description-required:
+    description: Every operation should have a description.
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: description
+      function: truthy
+
+  operation-operationid-required:
+    description: Every operation must have an operationId.
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: operationId
+      function: truthy
+
+  operation-operationid-camel-case:
+    description: operationId should use camelCase.
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  operation-tags-required:
+    description: Every operation must have at least one tag.
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: tags
+      function: truthy
+
+  operation-summary-apache-ofbiz-prefix:
+    description: Operation summaries should start with "Apache OFBiz".
+    severity: info
+    given: "$.paths[*][get,post,put,patch,delete].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^Apache OFBiz "
+
+  # TAGS
+  tags-global-defined:
+    description: Global tags array should be defined.
+    severity: warn
+    given: "$"
+    then:
+      field: tags
+      function: truthy
+
+  tags-description:
+    description: Each global tag should have a description.
+    severity: warn
+    given: "$.tags[*]"
+    then:
+      field: description
+      function: truthy
+
+  # PARAMETERS
+  parameter-description-required:
+    description: Every parameter must have a description.
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].parameters[*]"
+    then:
+      field: description
+      function: truthy
+
+  parameter-schema-required:
+    description: Every parameter must have a schema.
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete].parameters[*]"
+    then:
+      field: schema
+      function: truthy
+
+  # REQUEST BODIES
+  request-body-description:
+    description: Request bodies should have a description.
+    severity: warn
+    given: "$.paths[*][post,put,patch].requestBody"
+    then:
+      field: description
+      function: truthy
+
+  # RESPONSES
+  response-success-required:
+    description: Every operation must define at least one 2xx response.
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ["200"]
+            - required: ["201"]
+            - required: ["204"]
+
+  response-401-required:
+    description: Secured operations should document 401 Unauthorized response.
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: ["401"]
+
+  response-description-required:
+    description: Every response must have a description.
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete].responses[*]"
+    then:
+      field: description
+      function: truthy
+
+  # SCHEMAS
+  schema-description-required:
+    description: Top-level component schemas should have a description.
+    severity: warn
+    given: "$.components.schemas[*]"
+    then:
+      field: description
+      function: truthy
+
+  schema-property-description:
+    description: Schema properties should have descriptions.
+    severity: info
+    given: "$.components.schemas[*].properties[*]"
+    then:
+      field: description
+      function: truthy
+
+  # SECURITY
+  security-schemes-defined:
+    description: Security schemes must be defined in components.
+    severity: error
+    given: "$.components"
+    then:
+      field: securitySchemes
+      function: truthy
+
+  security-global-defined:
+    description: Global security requirements should be defined.
+    severity: warn
+    given: "$"
+    then:
+      field: security
+      function: truthy
+
+  # HTTP METHOD CONVENTIONS
+  get-no-request-body:
+    description: GET operations must not have a request body.
+    severity: error
+    given: "$.paths[*].get"
+    then:
+      field: requestBody
+      function: falsy
+
+  # AUTHENTICATION
+  auth-bearer-jwt:
+    description: Bearer authentication should specify JWT format.
+    severity: info
+    given: "$.components.securitySchemes[?(@.scheme == 'bearer')]"
+    then:
+      field: bearerFormat
+      function: truthy
+
+  # GENERAL QUALITY
+  no-empty-descriptions:
+    description: Descriptions must not be empty strings.
+    severity: warn
+    given: "$..description"
+    then:
+      function: pattern
+      functionOptions:
+        match: ".+"
+
+  response-status-code-standard:
+    description: OFBiz API responses should include statusCode, statusDescription, and data fields.
+    severity: info
+    given: "$.components.schemas[*].properties"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          anyOf:
+            - required: ["statusCode"]

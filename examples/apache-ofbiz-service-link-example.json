@@ -1,0 +1,5 @@
+{
+  "href": "https://localhost:8443/rest/services/findProductById",
+  "rel": "self",
+  "type": "get"
+}

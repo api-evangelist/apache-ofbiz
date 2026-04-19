@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-structure/apache-ofbiz-service-response-structure.json",
+  "name": "ServiceResponse",
+  "description": "Standard API response from an OFBiz service invocation.",
+  "type": "object",
+  "properties": {
+    "statusCode": {
+      "type": "int32",
+      "description": "HTTP status code.",
+      "example": 200
+    },
+    "statusDescription": {
+      "type": "string",
+      "description": "Human-readable status description.",
+      "example": "OK"
+    },
+    "successMessage": {
+      "type": "string",
+      "description": "Success message if applicable.",
+      "example": "OK"
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Service output data. Structure varies by service."
+    }
+  }
+}

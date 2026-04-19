@@ -1,0 +1,67 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "ofbiz": "https://ofbiz.apache.org/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "RefreshRequest": "ofbiz:RefreshRequest",
+    "ServiceEntry": "ofbiz:ServiceEntry",
+    "ServiceLink": "ofbiz:ServiceLink",
+    "ServiceListResponse": "ofbiz:ServiceListResponse",
+    "ServiceResponse": "ofbiz:ServiceResponse",
+    "TokenData": "ofbiz:TokenData",
+    "TokenResponse": "ofbiz:TokenResponse",
+    "accessToken": {
+      "@id": "ofbiz:access_token",
+      "@type": "xsd:string"
+    },
+    "data": {
+      "@id": "ofbiz:data",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "description": "schema:description",
+    "expiresIn": {
+      "@id": "ofbiz:expires_in",
+      "@type": "xsd:string"
+    },
+    "href": {
+      "@id": "ofbiz:href",
+      "@type": "@id"
+    },
+    "link": {
+      "@id": "ofbiz:link",
+      "@type": "@id"
+    },
+    "name": "schema:name",
+    "refreshToken": {
+      "@id": "ofbiz:refresh_token",
+      "@type": "xsd:string"
+    },
+    "rel": {
+      "@id": "ofbiz:rel",
+      "@type": "xsd:string"
+    },
+    "statusCode": {
+      "@id": "ofbiz:statusCode",
+      "@type": "xsd:integer"
+    },
+    "statusDescription": {
+      "@id": "ofbiz:statusDescription",
+      "@type": "xsd:string"
+    },
+    "successMessage": {
+      "@id": "ofbiz:successMessage",
+      "@type": "xsd:string"
+    },
+    "tokenType": {
+      "@id": "ofbiz:token_type",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "ofbiz:type",
+      "@type": "xsd:string"
+    }
+  }
+}

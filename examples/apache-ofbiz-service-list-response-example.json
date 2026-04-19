@@ -1,0 +1,16 @@
+{
+  "statusCode": 200,
+  "statusDescription": "OK",
+  "successMessage": "OK",
+  "data": [
+    {
+      "name": "findProductById",
+      "description": "Finds productId(s) corresponding to a product reference.",
+      "link": {
+        "href": "https://localhost:8443/rest/services/findProductById",
+        "rel": "self",
+        "type": "get"
+      }
+    }
+  ]
+}

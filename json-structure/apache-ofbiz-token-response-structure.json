@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-structure/apache-ofbiz-token-response-structure.json",
+  "name": "TokenResponse",
+  "description": "Standard API response containing JWT token data.",
+  "type": "object",
+  "properties": {
+    "statusCode": {
+      "type": "int32",
+      "description": "HTTP status code.",
+      "example": 200
+    },
+    "statusDescription": {
+      "type": "string",
+      "description": "Human-readable status description.",
+      "example": "OK"
+    },
+    "successMessage": {
+      "type": "string",
+      "description": "Success message from the server.",
+      "example": "Token granted."
+    },
+    "data": {
+      "type": "object",
+      "description": "JWT token data returned after successful authentication.",
+      "properties": {
+        "access_token": {
+          "type": "string",
+          "description": "JWT access token for Bearer authentication.",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.example"
+        },
+        "token_type": {
+          "type": "string",
+          "description": "Token type, always Bearer.",
+          "example": "Bearer"
+        },
+        "expires_in": {
+          "type": "string",
+          "description": "Token expiry duration in seconds.",
+          "example": "1800"
+        },
+        "refresh_token": {
+          "type": "string",
+          "description": "Refresh token for obtaining new access tokens.",
+          "example": "dGhpc19pc19hX3JlZnJlc2hfdG9rZW4"
+        }
+      }
+    }
+  }
+}

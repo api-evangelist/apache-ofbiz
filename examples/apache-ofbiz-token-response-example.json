@@ -1,0 +1,11 @@
+{
+  "statusCode": 200,
+  "statusDescription": "OK",
+  "successMessage": "Token granted.",
+  "data": {
+    "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.example",
+    "token_type": "Bearer",
+    "expires_in": "1800",
+    "refresh_token": "dGhpc19pc19hX3JlZnJlc2hfdG9rZW4"
+  }
+}

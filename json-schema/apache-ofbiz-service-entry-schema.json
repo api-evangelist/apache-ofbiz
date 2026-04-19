@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-schema/apache-ofbiz-service-entry-schema.json",
+  "title": "ServiceEntry",
+  "description": "A single exported OFBiz service with its metadata and invocation link.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The service name.",
+      "example": "findProductById"
+    },
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of the service.",
+      "example": "Finds productId(s) corresponding to a product reference."
+    },
+    "link": {
+      "type": "object",
+      "description": "Hypermedia link to a service endpoint.",
+      "properties": {
+        "href": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to invoke the service.",
+          "example": "https://localhost:8443/rest/services/findProductById"
+        },
+        "rel": {
+          "type": "string",
+          "description": "Relationship type.",
+          "example": "self"
+        },
+        "type": {
+          "type": "string",
+          "description": "HTTP method for accessing the service.",
+          "example": "get"
+        }
+      }
+    }
+  }
+}

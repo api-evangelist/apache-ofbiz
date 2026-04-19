@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-schema/apache-ofbiz-token-data-schema.json",
+  "title": "TokenData",
+  "description": "JWT token data returned after successful authentication.",
+  "type": "object",
+  "properties": {
+    "access_token": {
+      "type": "string",
+      "description": "JWT access token for Bearer authentication.",
+      "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.example"
+    },
+    "token_type": {
+      "type": "string",
+      "description": "Token type, always Bearer.",
+      "example": "Bearer"
+    },
+    "expires_in": {
+      "type": "string",
+      "description": "Token expiry duration in seconds.",
+      "example": "1800"
+    },
+    "refresh_token": {
+      "type": "string",
+      "description": "Refresh token for obtaining new access tokens.",
+      "example": "dGhpc19pc19hX3JlZnJlc2hfdG9rZW4"
+    }
+  }
+}
