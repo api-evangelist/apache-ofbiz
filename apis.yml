@@ -49,9 +49,9 @@ apis:
   - type: JSONSchema
     url: https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-schema/apache-ofbiz-service-response-schema.json
     title: Service Response Schema
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/rest-authentication.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/rest-services.yaml
 common:
 - type: LinkedIn
