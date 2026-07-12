@@ -54,6 +54,8 @@ apis:
   - type: X-NaftikoCapability
     url: capabilities/rest-services.yaml
 common:
+- type: Authentication
+  url: authentication/apache-ofbiz-authentication.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/apache-ofbiz
 - type: GitHubRepository

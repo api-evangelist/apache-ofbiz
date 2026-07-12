@@ -1,0 +1,20 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/apache-ofbiz-rest-api-openapi.yaml
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  description: HTTP Basic Auth used only for token acquisition at /auth/token.
+  sources:
+  - openapi/apache-ofbiz-rest-api-openapi.yaml
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: JWT Bearer token obtained from /auth/token. Required for all service endpoints.
+  sources:
+  - openapi/apache-ofbiz-rest-api-openapi.yaml
