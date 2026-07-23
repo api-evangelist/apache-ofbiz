@@ -1,0 +1,184 @@
+openapi: 3.0.3
+info:
+  title: Apache OFBiz REST Authentication API
+  description: 'REST API for Apache OFBiz, exposing OFBiz services via a RESTful interface. The API allows clients to list and invoke any OFBiz service that has been exported via the REST plugin. Authentication is JWT-based: clients first obtain a token via HTTP Basic Auth, then use Bearer authentication for subsequent calls. An OpenAPI/Swagger UI is available at /docs/swagger-ui.html.'
+  version: '18.12'
+  license:
+    name: Apache 2.0
+    identifier: Apache-2.0
+  contact:
+    name: Apache OFBiz
+    url: https://ofbiz.apache.org
+servers:
+- url: https://localhost:8443/rest
+  description: Apache OFBiz REST API server (default HTTPS port)
+security:
+- bearerAuth: []
+tags:
+- name: Authentication
+  description: Obtain and refresh JWT tokens for API access
+paths:
+  /auth/token:
+    post:
+      tags:
+      - Authentication
+      summary: Apache OFBiz Obtain JWT Access Token
+      description: Authenticate using HTTP Basic Auth (username/password) to receive a JWT access token and refresh token. The access token must be used as Bearer authentication for all subsequent API calls.
+      operationId: getToken
+      security:
+      - basicAuth: []
+      responses:
+        '200':
+          description: JWT token granted successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+              examples:
+                TokenResponse200Example:
+                  summary: Default getToken 200 response
+                  x-microcks-default: true
+                  value:
+                    statusCode: 200
+                    statusDescription: OK
+                    successMessage: Token granted.
+                    data:
+                      access_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.example
+                      token_type: Bearer
+                      expires_in: '1800'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /auth/refresh:
+    post:
+      tags:
+      - Authentication
+      summary: Apache OFBiz Refresh JWT Access Token
+      description: Obtain a new access token using a previously issued refresh token. Implements a token rotation mechanism for improved security.
+      operationId: refreshToken
+      requestBody:
+        required: true
+        description: Refresh token to exchange for a new access token.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+      responses:
+        '200':
+          description: New access token granted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+              examples:
+                RefreshToken200Example:
+                  summary: Default refreshToken 200 response
+                  x-microcks-default: true
+                  value:
+                    statusCode: 200
+                    statusDescription: OK
+                    successMessage: Token granted.
+                    data:
+                      access_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.newtoken
+                      token_type: Bearer
+                      expires_in: '1800'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  responses:
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    TokenData:
+      type: object
+      description: JWT token data returned after successful authentication.
+      properties:
+        access_token:
+          type: string
+          description: JWT access token for Bearer authentication.
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.example
+        token_type:
+          type: string
+          description: Token type, always Bearer.
+          example: Bearer
+        expires_in:
+          type: string
+          description: Token expiry duration in seconds.
+          example: '1800'
+        refresh_token:
+          type: string
+          description: Refresh token for obtaining new access tokens.
+          example: dGhpc19pc19hX3JlZnJlc2hfdG9rZW4
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code.
+          example: 400
+        statusDescription:
+          type: string
+          description: Human-readable status description.
+          example: Bad Request
+        errorMessage:
+          type: string
+          description: Detailed error message.
+          example: Invalid input parameters.
+    TokenResponse:
+      type: object
+      description: Standard API response containing JWT token data.
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code.
+          example: 200
+        statusDescription:
+          type: string
+          description: Human-readable status description.
+          example: OK
+        successMessage:
+          type: string
+          description: Success message from the server.
+          example: Token granted.
+        data:
+          $ref: '#/components/schemas/TokenData'
+    RefreshRequest:
+      type: object
+      description: Request body for token refresh.
+      required:
+      - refresh_token
+      properties:
+        refresh_token:
+          type: string
+          description: The refresh token previously issued by /auth/token.
+          example: dGhpc19pc19hX3JlZnJlc2hfdG9rZW4
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth used only for token acquisition at /auth/token.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Bearer token obtained from /auth/token. Required for all service endpoints.
