@@ -6,9 +6,22 @@ description: Apache OFBiz is an open-source enterprise resource planning (ERP) s
   API plugin allowing any exported service to be invoked via JWT- authenticated HTTP endpoints. Governed by the Apache Software
   Foundation under the Apache License 2.0. Written in Java with Groovy scripting support.
 type: Index
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/apache-ofbiz.png
 tags:
 - ERP
 - CRM
@@ -23,37 +36,61 @@ modified: '2026-05-19'
 url: https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
-- aid: apache-ofbiz:apache-ofbiz-rest-api
-  name: Apache OFBiz REST API
-  description: REST API plugin for Apache OFBiz that exposes any exported OFBiz service as a RESTful endpoint. Clients authenticate
-    via HTTP Basic Auth to obtain a JWT token, then invoke services via GET (with URL-encoded JSON parameters) or POST (with
-    JSON request body). Swagger UI is available at /docs/swagger-ui.html when the plugin is installed.
+- aid: apache-ofbiz:apache-ofbiz-authentication-api
+  name: Apache OFBiz Authentication API
+  description: Obtain and refresh JWT tokens for API access
   humanURL: https://github.com/apache/ofbiz-plugins/tree/trunk/rest-api
   baseURL: https://localhost:8443/rest
   tags:
-  - REST
-  - JWT
-  - Service Engine
-  - ERP
+  - Authentication
   properties:
-  - type: Documentation
-    url: https://github.com/apache/ofbiz-plugins/blob/trunk/rest-api/src/docs/asciidoc/rest-api.adoc
   - type: OpenAPI
-    url: https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/openapi/apache-ofbiz-rest-api-openapi.yaml
+    url: openapi/apache-ofbiz-authentication-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://github.com/apache/ofbiz-plugins/blob/trunk/rest-api/src/docs/asciidoc/rest-api.adoc
   - type: JSONSchema
-    url: https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-schema/apache-ofbiz-token-response-schema.json
-    title: Token Response Schema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-schema/apache-ofbiz-token-response-schema.json
   - type: JSONSchema
-    url: https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-schema/apache-ofbiz-service-entry-schema.json
-    title: Service Entry Schema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-schema/apache-ofbiz-service-entry-schema.json
   - type: JSONSchema
-    url: https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-schema/apache-ofbiz-service-response-schema.json
-    title: Service Response Schema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-schema/apache-ofbiz-service-response-schema.json
+  - type: X-NaftikoCapability
+    url: capabilities/rest-authentication.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/rest-services.yaml
+- aid: apache-ofbiz:apache-ofbiz-services-api
+  name: Apache OFBiz Services API
+  description: List and invoke exported OFBiz services
+  humanURL: https://github.com/apache/ofbiz-plugins/tree/trunk/rest-api
+  baseURL: https://localhost:8443/rest
+  tags:
+  - Services
+  properties:
+  - type: OpenAPI
+    url: openapi/apache-ofbiz-services-api-openapi.yml
+  - type: Documentation
+    url: >-
+      https://github.com/apache/ofbiz-plugins/blob/trunk/rest-api/src/docs/asciidoc/rest-api.adoc
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-schema/apache-ofbiz-token-response-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-schema/apache-ofbiz-service-entry-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-schema/apache-ofbiz-service-response-schema.json
   - type: X-NaftikoCapability
     url: capabilities/rest-authentication.yaml
   - type: X-NaftikoCapability
     url: capabilities/rest-services.yaml
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/apache-ofbiz/overview
 - type: AgenticAccess
   url: agentic-access/apache-ofbiz-agentic-access.yml
 - type: Authentication
