@@ -1,0 +1,463 @@
+openapi: "3.0.3"
+
+info:
+  title: Apache OFBiz REST API
+  description: >-
+    REST API for Apache OFBiz, exposing OFBiz services via a RESTful interface.
+    The API allows clients to list and invoke any OFBiz service that has been
+    exported via the REST plugin. Authentication is JWT-based: clients first
+    obtain a token via HTTP Basic Auth, then use Bearer authentication for
+    subsequent calls. An OpenAPI/Swagger UI is available at /docs/swagger-ui.html.
+  version: "18.12"
+  license:
+    name: Apache 2.0
+    identifier: Apache-2.0
+  contact:
+    name: Apache OFBiz
+    url: https://ofbiz.apache.org
+
+servers:
+  - url: https://localhost:8443/rest
+    description: Apache OFBiz REST API server (default HTTPS port)
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Authentication
+    description: Obtain and refresh JWT tokens for API access
+  - name: Services
+    description: List and invoke exported OFBiz services
+
+paths:
+  /auth/token:
+    post:
+      tags:
+        - Authentication
+      summary: Apache OFBiz Obtain JWT Access Token
+      description: >-
+        Authenticate using HTTP Basic Auth (username/password) to receive a
+        JWT access token and refresh token. The access token must be used as
+        Bearer authentication for all subsequent API calls.
+      operationId: getToken
+      security:
+        - basicAuth: []
+      responses:
+        "200":
+          description: JWT token granted successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+              examples:
+                TokenResponse200Example:
+                  summary: Default getToken 200 response
+                  x-microcks-default: true
+                  value:
+                    statusCode: 200
+                    statusDescription: OK
+                    successMessage: Token granted.
+                    data:
+                      access_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.example
+                      token_type: Bearer
+                      expires_in: "1800"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /auth/refresh:
+    post:
+      tags:
+        - Authentication
+      summary: Apache OFBiz Refresh JWT Access Token
+      description: >-
+        Obtain a new access token using a previously issued refresh token.
+        Implements a token rotation mechanism for improved security.
+      operationId: refreshToken
+      requestBody:
+        required: true
+        description: Refresh token to exchange for a new access token.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefreshRequest"
+      responses:
+        "200":
+          description: New access token granted.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenResponse"
+              examples:
+                RefreshToken200Example:
+                  summary: Default refreshToken 200 response
+                  x-microcks-default: true
+                  value:
+                    statusCode: 200
+                    statusDescription: OK
+                    successMessage: Token granted.
+                    data:
+                      access_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.newtoken
+                      token_type: Bearer
+                      expires_in: "1800"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /services:
+    get:
+      tags:
+        - Services
+      summary: Apache OFBiz List All Exported Services
+      description: >-
+        Returns a list of all OFBiz services that have been exported via the
+        REST plugin (export="true" with verb="get" or verb="post").
+      operationId: getServices
+      responses:
+        "200":
+          description: List of exported services retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceListResponse"
+              examples:
+                GetServices200Example:
+                  summary: Default getServices 200 response
+                  x-microcks-default: true
+                  value:
+                    statusCode: 200
+                    statusDescription: OK
+                    successMessage: OK
+                    data:
+                      - name: findProductById
+                        description: Finds productId(s) corresponding to a product reference, productId or a GoodIdentification idValue
+                        link:
+                          href: https://localhost:8443/rest/services/findProductById
+                          rel: self
+                          type: get
+                      - name: searchProductsByGoodIdentificationValue
+                        description: Search Products by Good Identification Value
+                        link:
+                          href: https://localhost:8443/rest/services/searchProductsByGoodIdentificationValue
+                          rel: self
+                          type: post
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+  /services/{serviceName}:
+    get:
+      tags:
+        - Services
+      summary: Apache OFBiz Invoke Service via GET
+      description: >-
+        Invoke an exported OFBiz service using HTTP GET. Input parameters must
+        be passed as a URL-encoded JSON string in the inParams query parameter.
+        Only services exported with verb="get" support this method.
+      operationId: invokeServiceGet
+      parameters:
+        - name: serviceName
+          in: path
+          required: true
+          description: The name of the OFBiz service to invoke.
+          schema:
+            type: string
+          example: findProductById
+        - name: inParams
+          in: query
+          required: false
+          description: URL-encoded JSON string of service input parameters.
+          schema:
+            type: string
+          example: "%7B%22idToFind%22%3A%22GZ-1001%22%7D"
+      responses:
+        "200":
+          description: Service invoked successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceResponse"
+              examples:
+                InvokeServiceGet200Example:
+                  summary: Default invokeServiceGet 200 response
+                  x-microcks-default: true
+                  value:
+                    statusCode: 200
+                    statusDescription: OK
+                    data:
+                      product:
+                        productId: GZ-1001
+                        productName: Nan Gizmo
+                        internalName: Nan Gizmo
+                        productTypeId: FINISHED_GOOD
+                        isVirtual: "N"
+                        isVariant: "N"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+    post:
+      tags:
+        - Services
+      summary: Apache OFBiz Invoke Service via POST
+      description: >-
+        Invoke an exported OFBiz service using HTTP POST. Input parameters are
+        passed as a JSON request body. Only services exported with verb="post"
+        support this method.
+      operationId: invokeServicePost
+      parameters:
+        - name: serviceName
+          in: path
+          required: true
+          description: The name of the OFBiz service to invoke.
+          schema:
+            type: string
+          example: searchProductsByGoodIdentificationValue
+      requestBody:
+        required: true
+        description: Service input parameters as a JSON object.
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+            examples:
+              InvokeServicePostRequestExample:
+                summary: Default invokeServicePost request
+                x-microcks-default: true
+                value:
+                  idFragment: "2644"
+      responses:
+        "200":
+          description: Service invoked successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceResponse"
+              examples:
+                InvokeServicePost200Example:
+                  summary: Default invokeServicePost 200 response
+                  x-microcks-default: true
+                  value:
+                    statusCode: 200
+                    statusDescription: OK
+                    data:
+                      products:
+                        - productId: GZ-2644
+                          internalName: Round Gizmo
+                          isVariant: "N"
+                          isVirtual: "N"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic Auth used only for token acquisition at /auth/token.
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Bearer token obtained from /auth/token. Required for all service endpoints.
+
+  schemas:
+    TokenData:
+      type: object
+      description: JWT token data returned after successful authentication.
+      properties:
+        access_token:
+          type: string
+          description: JWT access token for Bearer authentication.
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.example
+        token_type:
+          type: string
+          description: Token type, always Bearer.
+          example: Bearer
+        expires_in:
+          type: string
+          description: Token expiry duration in seconds.
+          example: "1800"
+        refresh_token:
+          type: string
+          description: Refresh token for obtaining new access tokens.
+          example: dGhpc19pc19hX3JlZnJlc2hfdG9rZW4
+
+    TokenResponse:
+      type: object
+      description: Standard API response containing JWT token data.
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code.
+          example: 200
+        statusDescription:
+          type: string
+          description: Human-readable status description.
+          example: OK
+        successMessage:
+          type: string
+          description: Success message from the server.
+          example: Token granted.
+        data:
+          $ref: "#/components/schemas/TokenData"
+
+    RefreshRequest:
+      type: object
+      description: Request body for token refresh.
+      required:
+        - refresh_token
+      properties:
+        refresh_token:
+          type: string
+          description: The refresh token previously issued by /auth/token.
+          example: dGhpc19pc19hX3JlZnJlc2hfdG9rZW4
+
+    ServiceLink:
+      type: object
+      description: Hypermedia link to a service endpoint.
+      properties:
+        href:
+          type: string
+          format: uri
+          description: URL to invoke the service.
+          example: https://localhost:8443/rest/services/findProductById
+        rel:
+          type: string
+          description: Relationship type.
+          example: self
+        type:
+          type: string
+          description: HTTP method for accessing the service.
+          example: get
+
+    ServiceEntry:
+      type: object
+      description: A single exported OFBiz service with its metadata and invocation link.
+      properties:
+        name:
+          type: string
+          description: The service name.
+          example: findProductById
+        description:
+          type: string
+          description: Human-readable description of the service.
+          example: Finds productId(s) corresponding to a product reference.
+        link:
+          $ref: "#/components/schemas/ServiceLink"
+
+    ServiceListResponse:
+      type: object
+      description: API response containing a list of exported services.
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code.
+          example: 200
+        statusDescription:
+          type: string
+          description: Human-readable status description.
+          example: OK
+        successMessage:
+          type: string
+          description: Success message.
+          example: OK
+        data:
+          type: array
+          description: Array of exported service entries.
+          items:
+            $ref: "#/components/schemas/ServiceEntry"
+
+    ServiceResponse:
+      type: object
+      description: Standard API response from an OFBiz service invocation.
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code.
+          example: 200
+        statusDescription:
+          type: string
+          description: Human-readable status description.
+          example: OK
+        successMessage:
+          type: string
+          description: Success message if applicable.
+          example: OK
+        data:
+          type: object
+          additionalProperties: true
+          description: Service output data. Structure varies by service.
+
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code.
+          example: 400
+        statusDescription:
+          type: string
+          description: Human-readable status description.
+          example: Bad Request
+        errorMessage:
+          type: string
+          description: Detailed error message.
+          example: Invalid input parameters.
+
+  responses:
+    BadRequest:
+      description: Bad request - invalid input parameters.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    NotFound:
+      description: Service not found.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    InternalServerError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"

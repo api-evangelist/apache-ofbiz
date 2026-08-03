@@ -1,0 +1,16 @@
+{
+  "provider": "apache-ofbiz",
+  "sources": [
+    "apache-ofbiz-authentication-api-openapi.yml",
+    "apache-ofbiz-services-api-openapi.yml"
+  ],
+  "outputs": [
+    "apache-ofbiz-authentication-api-openapi.yml",
+    "apache-ofbiz-services-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

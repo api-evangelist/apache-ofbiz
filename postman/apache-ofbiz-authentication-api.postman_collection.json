@@ -1,0 +1,450 @@
+{
+  "info": {
+    "_postman_id": "357ef766-2903-4df9-b93f-d57666472b34",
+    "name": "Apache OFBiz REST Authentication API",
+    "description": "REST API for Apache OFBiz, exposing OFBiz services via a RESTful interface. The API allows clients to list and invoke any OFBiz service that has been exported via the REST plugin. Authentication is JWT-based: clients first obtain a token via HTTP Basic Auth, then use Bearer authentication for subsequent calls. An OpenAPI/Swagger UI is available at /docs/swagger-ui.html.\n\nContact Support:\n Name: Apache OFBiz",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:01:48.000Z",
+    "updatedAt": "2026-07-28T01:01:48.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-357ef766-2903-4df9-b93f-d57666472b34"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "token",
+          "item": [
+            {
+              "name": "Apache OFBiz Obtain JWT Access Token",
+              "id": "d805b87b-c3bc-4107-a1d2-5839cea45d70",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "basic",
+                  "basic": [
+                    {
+                      "key": "username",
+                      "value": "{{basicAuthUsername}}",
+                      "type": "string"
+                    },
+                    {
+                      "key": "password",
+                      "value": "{{basicAuthPassword}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/auth/token",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "token"
+                  ]
+                },
+                "description": "Authenticate using HTTP Basic Auth (username/password) to receive a JWT access token and refresh token. The access token must be used as Bearer authentication for all subsequent API calls."
+              },
+              "response": [
+                {
+                  "id": "7b1856df-6840-4ced-b26a-45dedd6022aa",
+                  "name": "JWT token granted successfully.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/token",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "auth",
+                        "token"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"successMessage\": \"<string>\",\n  \"data\": {\n    \"access_token\": \"<string>\",\n    \"token_type\": \"<string>\",\n    \"expires_in\": \"<string>\",\n    \"refresh_token\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T01:01:48.000Z",
+                  "updatedAt": "2026-07-28T01:01:48.000Z",
+                  "uid": "35240-7b1856df-6840-4ced-b26a-45dedd6022aa"
+                },
+                {
+                  "id": "5a3e36bf-450b-49b3-99b3-537b52527d29",
+                  "name": "Unauthorized - missing or invalid authentication token.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/token",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "auth",
+                        "token"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:01:48.000Z",
+                  "updatedAt": "2026-07-28T01:01:48.000Z",
+                  "uid": "35240-5a3e36bf-450b-49b3-99b3-537b52527d29"
+                },
+                {
+                  "id": "e47e6584-d414-49c2-b216-299496099be4",
+                  "name": "Internal server error.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/token",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "auth",
+                        "token"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:01:48.000Z",
+                  "updatedAt": "2026-07-28T01:01:48.000Z",
+                  "uid": "35240-e47e6584-d414-49c2-b216-299496099be4"
+                }
+              ],
+              "createdAt": "2026-07-28T01:01:48.000Z",
+              "updatedAt": "2026-07-28T01:01:48.000Z",
+              "uid": "35240-d805b87b-c3bc-4107-a1d2-5839cea45d70"
+            }
+          ],
+          "id": "07a01e09-2614-408b-9e68-7c3e57c4ac09",
+          "createdAt": "2026-07-28T01:01:48.000Z",
+          "updatedAt": "2026-07-28T01:01:48.000Z",
+          "uid": "35240-07a01e09-2614-408b-9e68-7c3e57c4ac09"
+        },
+        {
+          "name": "refresh",
+          "item": [
+            {
+              "name": "Apache OFBiz Refresh JWT Access Token",
+              "id": "82662d9b-fb80-42cb-b6ca-46df183da35c",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"refresh_token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/auth/refresh",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "refresh"
+                  ]
+                },
+                "description": "Obtain a new access token using a previously issued refresh token. Implements a token rotation mechanism for improved security."
+              },
+              "response": [
+                {
+                  "id": "fb31c31a-d01b-40ab-aae6-c2eeea94e511",
+                  "name": "New access token granted.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"refresh_token\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/refresh",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "auth",
+                        "refresh"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"successMessage\": \"<string>\",\n  \"data\": {\n    \"access_token\": \"<string>\",\n    \"token_type\": \"<string>\",\n    \"expires_in\": \"<string>\",\n    \"refresh_token\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T01:01:48.000Z",
+                  "updatedAt": "2026-07-28T01:01:48.000Z",
+                  "uid": "35240-fb31c31a-d01b-40ab-aae6-c2eeea94e511"
+                },
+                {
+                  "id": "f54218cb-d74f-45ad-9952-1f52707a6d9d",
+                  "name": "Unauthorized - missing or invalid authentication token.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"refresh_token\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/refresh",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "auth",
+                        "refresh"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:01:48.000Z",
+                  "updatedAt": "2026-07-28T01:01:48.000Z",
+                  "uid": "35240-f54218cb-d74f-45ad-9952-1f52707a6d9d"
+                },
+                {
+                  "id": "3612d20f-d15c-4be0-a5f4-371280a9b419",
+                  "name": "Internal server error.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"refresh_token\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/auth/refresh",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "auth",
+                        "refresh"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:01:48.000Z",
+                  "updatedAt": "2026-07-28T01:01:48.000Z",
+                  "uid": "35240-3612d20f-d15c-4be0-a5f4-371280a9b419"
+                }
+              ],
+              "createdAt": "2026-07-28T01:01:48.000Z",
+              "updatedAt": "2026-07-28T01:01:48.000Z",
+              "uid": "35240-82662d9b-fb80-42cb-b6ca-46df183da35c"
+            }
+          ],
+          "id": "de299110-b274-4eb0-81b8-6af01ac21a89",
+          "createdAt": "2026-07-28T01:01:48.000Z",
+          "updatedAt": "2026-07-28T01:01:48.000Z",
+          "uid": "35240-de299110-b274-4eb0-81b8-6af01ac21a89"
+        }
+      ],
+      "id": "27ea8635-acc0-4a79-84e6-bae7a603dd03",
+      "createdAt": "2026-07-28T01:01:48.000Z",
+      "updatedAt": "2026-07-28T01:01:48.000Z",
+      "uid": "35240-27ea8635-acc0-4a79-84e6-bae7a603dd03"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://localhost:8443/rest"
+    }
+  ]
+}

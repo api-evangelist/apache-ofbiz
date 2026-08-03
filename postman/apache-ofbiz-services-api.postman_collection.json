@@ -1,0 +1,891 @@
+{
+  "info": {
+    "_postman_id": "1f3c64fc-bc6e-4493-a1b8-0193b15a90b6",
+    "name": "Apache OFBiz REST Authentication Services API",
+    "description": "REST API for Apache OFBiz, exposing OFBiz services via a RESTful interface. The API allows clients to list and invoke any OFBiz service that has been exported via the REST plugin. Authentication is JWT-based: clients first obtain a token via HTTP Basic Auth, then use Bearer authentication for subsequent calls. An OpenAPI/Swagger UI is available at /docs/swagger-ui.html.\n\nContact Support:\n Name: Apache OFBiz",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T01:01:49.000Z",
+    "updatedAt": "2026-07-28T01:01:49.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-1f3c64fc-bc6e-4493-a1b8-0193b15a90b6"
+  },
+  "item": [
+    {
+      "name": "services",
+      "item": [
+        {
+          "name": "{serviceName}",
+          "item": [
+            {
+              "name": "Apache OFBiz Invoke Service via GET",
+              "id": "63e3e39f-91ac-4a5f-a153-2d5920dc94d9",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/services/:serviceName?inParams=<string>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services",
+                    ":serviceName"
+                  ],
+                  "query": [
+                    {
+                      "description": "URL-encoded JSON string of service input parameters.",
+                      "key": "inParams",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "id": "797112cb-240f-4a47-b89f-a01b2308da6b",
+                      "key": "serviceName",
+                      "value": "<string>",
+                      "description": "(Required) The name of the OFBiz service to invoke."
+                    }
+                  ]
+                },
+                "description": "Invoke an exported OFBiz service using HTTP GET. Input parameters must be passed as a URL-encoded JSON string in the inParams query parameter. Only services exported with verb=\"get\" support this method."
+              },
+              "response": [
+                {
+                  "id": "81a3582d-5ead-4fa2-b152-18dd3efcaf07",
+                  "name": "Service invoked successfully.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceName?inParams=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceName"
+                      ],
+                      "query": [
+                        {
+                          "description": "URL-encoded JSON string of service input parameters.",
+                          "key": "inParams",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"successMessage\": \"<string>\",\n  \"data\": {\n    \"est9\": 106771,\n    \"ad9\": \"esse\"\n  }\n}",
+                  "createdAt": "2026-07-28T01:01:49.000Z",
+                  "updatedAt": "2026-07-28T01:01:49.000Z",
+                  "uid": "35240-81a3582d-5ead-4fa2-b152-18dd3efcaf07"
+                },
+                {
+                  "id": "98ea28fe-5cee-42cd-bda8-ad36a9884f28",
+                  "name": "Bad request - invalid input parameters.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceName?inParams=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceName"
+                      ],
+                      "query": [
+                        {
+                          "description": "URL-encoded JSON string of service input parameters.",
+                          "key": "inParams",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:01:49.000Z",
+                  "updatedAt": "2026-07-28T01:01:49.000Z",
+                  "uid": "35240-98ea28fe-5cee-42cd-bda8-ad36a9884f28"
+                },
+                {
+                  "id": "52bcba86-65a2-4136-b83a-4567dffe0848",
+                  "name": "Unauthorized - missing or invalid authentication token.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceName?inParams=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceName"
+                      ],
+                      "query": [
+                        {
+                          "description": "URL-encoded JSON string of service input parameters.",
+                          "key": "inParams",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:01:49.000Z",
+                  "updatedAt": "2026-07-28T01:01:49.000Z",
+                  "uid": "35240-52bcba86-65a2-4136-b83a-4567dffe0848"
+                },
+                {
+                  "id": "4f226dd5-a299-4f28-972e-d863ea693784",
+                  "name": "Service not found.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceName?inParams=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceName"
+                      ],
+                      "query": [
+                        {
+                          "description": "URL-encoded JSON string of service input parameters.",
+                          "key": "inParams",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:01:49.000Z",
+                  "updatedAt": "2026-07-28T01:01:49.000Z",
+                  "uid": "35240-4f226dd5-a299-4f28-972e-d863ea693784"
+                },
+                {
+                  "id": "ca407456-b558-47cb-b517-9654e2c62f7d",
+                  "name": "Internal server error.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceName?inParams=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceName"
+                      ],
+                      "query": [
+                        {
+                          "description": "URL-encoded JSON string of service input parameters.",
+                          "key": "inParams",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:01:49.000Z",
+                  "updatedAt": "2026-07-28T01:01:49.000Z",
+                  "uid": "35240-ca407456-b558-47cb-b517-9654e2c62f7d"
+                }
+              ],
+              "createdAt": "2026-07-28T01:01:49.000Z",
+              "updatedAt": "2026-07-28T01:01:49.000Z",
+              "uid": "35240-63e3e39f-91ac-4a5f-a153-2d5920dc94d9"
+            },
+            {
+              "name": "Apache OFBiz Invoke Service via POST",
+              "id": "4bb1f3f4-31af-4be8-bfc4-b4f392160739",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"magna_d\": false,\n  \"dolore92\": 70556775.4162367,\n  \"est6dd\": \"in\",\n  \"sed_6c\": true\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/services/:serviceName",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services",
+                    ":serviceName"
+                  ],
+                  "variable": [
+                    {
+                      "id": "9ee9fdbe-d60c-4fc0-abfc-f0416bac1b31",
+                      "key": "serviceName",
+                      "value": "<string>",
+                      "description": "(Required) The name of the OFBiz service to invoke."
+                    }
+                  ]
+                },
+                "description": "Invoke an exported OFBiz service using HTTP POST. Input parameters are passed as a JSON request body. Only services exported with verb=\"post\" support this method."
+              },
+              "response": [
+                {
+                  "id": "ffc3883a-e907-4710-bf9e-47c75b7b4981",
+                  "name": "Service invoked successfully.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"magna_d\": false,\n  \"dolore92\": 70556775.4162367,\n  \"est6dd\": \"in\",\n  \"sed_6c\": true\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceName"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"successMessage\": \"<string>\",\n  \"data\": {\n    \"est9\": 106771,\n    \"ad9\": \"esse\"\n  }\n}",
+                  "createdAt": "2026-07-28T01:01:49.000Z",
+                  "updatedAt": "2026-07-28T01:01:49.000Z",
+                  "uid": "35240-ffc3883a-e907-4710-bf9e-47c75b7b4981"
+                },
+                {
+                  "id": "e239ee1c-df10-4418-994e-0ccbb44aec83",
+                  "name": "Bad request - invalid input parameters.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"magna_d\": false,\n  \"dolore92\": 70556775.4162367,\n  \"est6dd\": \"in\",\n  \"sed_6c\": true\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceName"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:01:49.000Z",
+                  "updatedAt": "2026-07-28T01:01:49.000Z",
+                  "uid": "35240-e239ee1c-df10-4418-994e-0ccbb44aec83"
+                },
+                {
+                  "id": "b0b6b09d-1162-400f-bea4-e20b299f55e6",
+                  "name": "Unauthorized - missing or invalid authentication token.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"magna_d\": false,\n  \"dolore92\": 70556775.4162367,\n  \"est6dd\": \"in\",\n  \"sed_6c\": true\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceName"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:01:49.000Z",
+                  "updatedAt": "2026-07-28T01:01:49.000Z",
+                  "uid": "35240-b0b6b09d-1162-400f-bea4-e20b299f55e6"
+                },
+                {
+                  "id": "5d898961-8c7b-4644-b4c8-6882348034fe",
+                  "name": "Service not found.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"magna_d\": false,\n  \"dolore92\": 70556775.4162367,\n  \"est6dd\": \"in\",\n  \"sed_6c\": true\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceName"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:01:49.000Z",
+                  "updatedAt": "2026-07-28T01:01:49.000Z",
+                  "uid": "35240-5d898961-8c7b-4644-b4c8-6882348034fe"
+                },
+                {
+                  "id": "4723bd07-24ea-4bc7-833f-8170f59dd40c",
+                  "name": "Internal server error.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"magna_d\": false,\n  \"dolore92\": 70556775.4162367,\n  \"est6dd\": \"in\",\n  \"sed_6c\": true\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/services/:serviceName",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "services",
+                        ":serviceName"
+                      ],
+                      "variable": [
+                        {
+                          "key": "serviceName"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+                  "createdAt": "2026-07-28T01:01:49.000Z",
+                  "updatedAt": "2026-07-28T01:01:49.000Z",
+                  "uid": "35240-4723bd07-24ea-4bc7-833f-8170f59dd40c"
+                }
+              ],
+              "createdAt": "2026-07-28T01:01:49.000Z",
+              "updatedAt": "2026-07-28T01:01:49.000Z",
+              "uid": "35240-4bb1f3f4-31af-4be8-bfc4-b4f392160739"
+            }
+          ],
+          "id": "01f393ef-ca03-4ecf-bf3d-b8f62a8d2704",
+          "createdAt": "2026-07-28T01:01:49.000Z",
+          "updatedAt": "2026-07-28T01:01:49.000Z",
+          "uid": "35240-01f393ef-ca03-4ecf-bf3d-b8f62a8d2704"
+        },
+        {
+          "name": "Apache OFBiz List All Exported Services",
+          "id": "77f15060-fda9-42cd-84a5-56db97fc220b",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/services",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "services"
+              ]
+            },
+            "description": "Returns a list of all OFBiz services that have been exported via the REST plugin (export=\"true\" with verb=\"get\" or verb=\"post\")."
+          },
+          "response": [
+            {
+              "id": "acc3d6fe-076b-4979-a43e-8d960d210067",
+              "name": "List of exported services retrieved successfully.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/services",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"successMessage\": \"<string>\",\n  \"data\": [\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"link\": {\n        \"href\": \"<uri>\",\n        \"rel\": \"<string>\",\n        \"type\": \"<string>\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"description\": \"<string>\",\n      \"link\": {\n        \"href\": \"<uri>\",\n        \"rel\": \"<string>\",\n        \"type\": \"<string>\"\n      }\n    }\n  ]\n}",
+              "createdAt": "2026-07-28T01:01:49.000Z",
+              "updatedAt": "2026-07-28T01:01:49.000Z",
+              "uid": "35240-acc3d6fe-076b-4979-a43e-8d960d210067"
+            },
+            {
+              "id": "a4aee15d-b9b9-477c-af55-7a01efd45ea4",
+              "name": "Unauthorized - missing or invalid authentication token.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/services",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:01:49.000Z",
+              "updatedAt": "2026-07-28T01:01:49.000Z",
+              "uid": "35240-a4aee15d-b9b9-477c-af55-7a01efd45ea4"
+            },
+            {
+              "id": "36b61d29-54cc-4b59-9162-a0c35a537c1c",
+              "name": "Internal server error.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/services",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "services"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"statusCode\": \"<integer>\",\n  \"statusDescription\": \"<string>\",\n  \"errorMessage\": \"<string>\"\n}",
+              "createdAt": "2026-07-28T01:01:49.000Z",
+              "updatedAt": "2026-07-28T01:01:49.000Z",
+              "uid": "35240-36b61d29-54cc-4b59-9162-a0c35a537c1c"
+            }
+          ],
+          "createdAt": "2026-07-28T01:01:49.000Z",
+          "updatedAt": "2026-07-28T01:01:49.000Z",
+          "uid": "35240-77f15060-fda9-42cd-84a5-56db97fc220b"
+        }
+      ],
+      "id": "60332dde-9740-45ae-ab3f-5952afca14dc",
+      "createdAt": "2026-07-28T01:01:49.000Z",
+      "updatedAt": "2026-07-28T01:01:49.000Z",
+      "uid": "35240-60332dde-9740-45ae-ab3f-5952afca14dc"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://localhost:8443/rest"
+    }
+  ]
+}
