@@ -58,10 +58,6 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-schema/apache-ofbiz-service-response-schema.json
-  - type: X-NaftikoCapability
-    url: capabilities/rest-authentication.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/rest-services.yaml
 - aid: apache-ofbiz:apache-ofbiz-services-api
   name: Apache OFBiz Services API
   description: List and invoke exported OFBiz services
@@ -84,11 +80,16 @@ apis:
   - type: JSONSchema
     url: >-
       https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-schema/apache-ofbiz-service-response-schema.json
-  - type: X-NaftikoCapability
-    url: capabilities/rest-authentication.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/rest-services.yaml
 common:
+- type: SecurityPolicy
+  url: https://github.com/apache/ofbiz-framework/blob/trunk/SECURITY.md
+- type: CodeOfConduct
+  url: https://github.com/apache/.github/blob/main/.github/CODE_OF_CONDUCT.md
+- type: ContributionGuide
+  url: https://github.com/apache/ofbiz-framework/blob/trunk/CONTRIBUTING.adoc
+- type: License
+  name: Apache-2.0
+  url: https://github.com/apache/ofbiz-framework/blob/trunk/LICENSE
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/apache-ofbiz/overview
 - type: AgenticAccess
