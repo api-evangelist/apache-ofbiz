@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apache OFBiz REST Authentication API",
+    "version": "18.12"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apache OFBiz Obtain JWT Access Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://localhost:8443/rest/auth/token",
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Authenticate using HTTP Basic Auth (username/password) to receive a JWT access token and refresh token. The access token must be used as Bearer authentication for all subsequent API calls."
+        },
+        {
+          "info": {
+            "name": "Apache OFBiz Refresh JWT Access Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://localhost:8443/rest/auth/refresh",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Obtain a new access token using a previously issued refresh token. Implements a token rotation mechanism for improved security."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

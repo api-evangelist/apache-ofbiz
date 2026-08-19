@@ -1,0 +1,83 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Apache OFBiz REST Authentication Services API",
+    "version": "18.12"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Services",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Apache OFBiz List All Exported Services",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:8443/rest/services"
+          },
+          "docs": "Returns a list of all OFBiz services that have been exported via the REST plugin (export=\"true\" with verb=\"get\" or verb=\"post\")."
+        },
+        {
+          "info": {
+            "name": "Apache OFBiz Invoke Service via GET",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://localhost:8443/rest/services/:serviceName",
+            "params": [
+              {
+                "name": "serviceName",
+                "value": "findProductById",
+                "type": "path",
+                "description": "The name of the OFBiz service to invoke."
+              },
+              {
+                "name": "inParams",
+                "value": "%7B%22idToFind%22%3A%22GZ-1001%22%7D",
+                "type": "query",
+                "description": "URL-encoded JSON string of service input parameters."
+              }
+            ]
+          },
+          "docs": "Invoke an exported OFBiz service using HTTP GET. Input parameters must be passed as a URL-encoded JSON string in the inParams query parameter. Only services exported with verb=\"get\" support this method."
+        },
+        {
+          "info": {
+            "name": "Apache OFBiz Invoke Service via POST",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://localhost:8443/rest/services/:serviceName",
+            "params": [
+              {
+                "name": "serviceName",
+                "value": "searchProductsByGoodIdentificationValue",
+                "type": "path",
+                "description": "The name of the OFBiz service to invoke."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Invoke an exported OFBiz service using HTTP POST. Input parameters are passed as a JSON request body. Only services exported with verb=\"post\" support this method."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
