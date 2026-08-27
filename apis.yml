@@ -10,14 +10,15 @@ accessModel:
   pricing: freemium
   onboarding: self-serve
   trial: false
-  try_now: true
+  try_now: false
   public: false
   label: Freemium · Self-serve signup
-  confidence: high
+  confidence: medium
+  try_now_blocked_by: loopback
   source:
   - plans
   - authentication
-  generated: '2026-07-22'
+  generated: '2026-08-26'
   method: derived
 position: Consumer
 access: 3rd-Party
