@@ -6,6 +6,20 @@ description: Apache OFBiz is an open-source enterprise resource planning (ERP) s
   API plugin allowing any exported service to be invoked via JWT- authenticated HTTP endpoints. Governed by the Apache Software
   Foundation under the Apache License 2.0. Written in Java with Groovy scripting support.
 type: Index
+deliveryModel:
+  model: open-core
+  license: Apache-2.0
+  open_source: true
+  commercial: true
+  callable_host: false
+  label: Open core · an OSS project plus a commercial hosted product
+  confidence: high
+  source:
+  - license
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
