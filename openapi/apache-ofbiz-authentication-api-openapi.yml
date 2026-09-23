@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Apache OFBiz REST Authentication API
   description: 'REST API for Apache OFBiz, exposing OFBiz services via a RESTful interface. The API allows clients to list and invoke any OFBiz service that has been exported via the REST plugin. Authentication is JWT-based: clients first obtain a token via HTTP Basic Auth, then use Bearer authentication for subsequent calls. An OpenAPI/Swagger UI is available at /docs/swagger-ui.html.'
@@ -94,40 +94,7 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    TokenData:
-      type: object
-      description: JWT token data returned after successful authentication.
-      properties:
-        access_token:
-          type: string
-          description: JWT access token for Bearer authentication.
-          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.example
-        token_type:
-          type: string
-          description: Token type, always Bearer.
-          example: Bearer
-        expires_in:
-          type: string
-          description: Token expiry duration in seconds.
-          example: '1800'
-        refresh_token:
-          type: string
-          description: Refresh token for obtaining new access tokens.
-          example: dGhpc19pc19hX3JlZnJlc2hfdG9rZW4
     ErrorResponse:
       type: object
       description: Standard error response.
@@ -172,6 +139,39 @@ components:
           type: string
           description: The refresh token previously issued by /auth/token.
           example: dGhpc19pc19hX3JlZnJlc2hfdG9rZW4
+    TokenData:
+      type: object
+      description: JWT token data returned after successful authentication.
+      properties:
+        access_token:
+          type: string
+          description: JWT access token for Bearer authentication.
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.example
+        token_type:
+          type: string
+          description: Token type, always Bearer.
+          example: Bearer
+        expires_in:
+          type: string
+          description: Token expiry duration in seconds.
+          example: '1800'
+        refresh_token:
+          type: string
+          description: Refresh token for obtaining new access tokens.
+          example: dGhpc19pc19hX3JlZnJlc2hfdG9rZW4
+  responses:
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     basicAuth:
       type: http
