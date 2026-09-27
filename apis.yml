@@ -44,7 +44,7 @@ tags:
 - Business Applications
 - Apache
 - Java
-- Open-Source
+- Open Source
 - Supply Chain
 tags_raw:
 - ERP
@@ -55,6 +55,7 @@ tags_raw:
 - Java
 - Open Source
 - Supply Chain
+- Open-Source
 created: '2026-03-16'
 modified: '2026-05-19'
 url: https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/apis.yml

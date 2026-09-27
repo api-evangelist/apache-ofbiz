@@ -175,23 +175,32 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    NotFound:
+      description: Service not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    InternalServerError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request - invalid input parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    ErrorResponse:
-      type: object
-      description: Standard error response.
-      properties:
-        statusCode:
-          type: integer
-          description: HTTP status code.
-          example: 400
-        statusDescription:
-          type: string
-          description: Human-readable status description.
-          example: Bad Request
-        errorMessage:
-          type: string
-          description: Detailed error message.
-          example: Invalid input parameters.
     ServiceLink:
       type: object
       description: Hypermedia link to a service endpoint.
@@ -209,6 +218,36 @@ components:
           type: string
           description: HTTP method for accessing the service.
           example: get
+    ServiceEntry:
+      type: object
+      description: A single exported OFBiz service with its metadata and invocation link.
+      properties:
+        name:
+          type: string
+          description: The service name.
+          example: findProductById
+        description:
+          type: string
+          description: Human-readable description of the service.
+          example: Finds productId(s) corresponding to a product reference.
+        link:
+          $ref: '#/components/schemas/ServiceLink'
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code.
+          example: 400
+        statusDescription:
+          type: string
+          description: Human-readable status description.
+          example: Bad Request
+        errorMessage:
+          type: string
+          description: Detailed error message.
+          example: Invalid input parameters.
     ServiceListResponse:
       type: object
       description: API response containing a list of exported services.
@@ -230,20 +269,6 @@ components:
           description: Array of exported service entries.
           items:
             $ref: '#/components/schemas/ServiceEntry'
-    ServiceEntry:
-      type: object
-      description: A single exported OFBiz service with its metadata and invocation link.
-      properties:
-        name:
-          type: string
-          description: The service name.
-          example: findProductById
-        description:
-          type: string
-          description: Human-readable description of the service.
-          example: Finds productId(s) corresponding to a product reference.
-        link:
-          $ref: '#/components/schemas/ServiceLink'
     ServiceResponse:
       type: object
       description: Standard API response from an OFBiz service invocation.
@@ -264,31 +289,6 @@ components:
           type: object
           additionalProperties: true
           description: Service output data. Structure varies by service.
-  responses:
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    NotFound:
-      description: Service not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request - invalid input parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     basicAuth:
       type: http
