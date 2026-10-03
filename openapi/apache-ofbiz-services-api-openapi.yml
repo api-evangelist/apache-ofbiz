@@ -175,49 +175,27 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
-  responses:
-    NotFound:
-      description: Service not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    InternalServerError:
-      description: Internal server error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request - invalid input parameters.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   schemas:
-    ServiceLink:
+    ServiceResponse:
       type: object
-      description: Hypermedia link to a service endpoint.
+      description: Standard API response from an OFBiz service invocation.
       properties:
-        href:
+        statusCode:
+          type: integer
+          description: HTTP status code.
+          example: 200
+        statusDescription:
           type: string
-          format: uri
-          description: URL to invoke the service.
-          example: https://localhost:8443/rest/services/findProductById
-        rel:
+          description: Human-readable status description.
+          example: OK
+        successMessage:
           type: string
-          description: Relationship type.
-          example: self
-        type:
-          type: string
-          description: HTTP method for accessing the service.
-          example: get
+          description: Success message if applicable.
+          example: OK
+        data:
+          type: object
+          additionalProperties: true
+          description: Service output data. Structure varies by service.
     ServiceEntry:
       type: object
       description: A single exported OFBiz service with its metadata and invocation link.
@@ -269,26 +247,48 @@ components:
           description: Array of exported service entries.
           items:
             $ref: '#/components/schemas/ServiceEntry'
-    ServiceResponse:
+    ServiceLink:
       type: object
-      description: Standard API response from an OFBiz service invocation.
+      description: Hypermedia link to a service endpoint.
       properties:
-        statusCode:
-          type: integer
-          description: HTTP status code.
-          example: 200
-        statusDescription:
+        href:
           type: string
-          description: Human-readable status description.
-          example: OK
-        successMessage:
+          format: uri
+          description: URL to invoke the service.
+          example: https://localhost:8443/rest/services/findProductById
+        rel:
           type: string
-          description: Success message if applicable.
-          example: OK
-        data:
-          type: object
-          additionalProperties: true
-          description: Service output data. Structure varies by service.
+          description: Relationship type.
+          example: self
+        type:
+          type: string
+          description: HTTP method for accessing the service.
+          example: get
+  responses:
+    InternalServerError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Service not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    BadRequest:
+      description: Bad request - invalid input parameters.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     basicAuth:
       type: http
