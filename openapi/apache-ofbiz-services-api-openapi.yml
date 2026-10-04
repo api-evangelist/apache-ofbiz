@@ -176,56 +176,23 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    ServiceResponse:
+    ServiceLink:
       type: object
-      description: Standard API response from an OFBiz service invocation.
+      description: Hypermedia link to a service endpoint.
       properties:
-        statusCode:
-          type: integer
-          description: HTTP status code.
-          example: 200
-        statusDescription:
+        href:
           type: string
-          description: Human-readable status description.
-          example: OK
-        successMessage:
+          format: uri
+          description: URL to invoke the service.
+          example: https://localhost:8443/rest/services/findProductById
+        rel:
           type: string
-          description: Success message if applicable.
-          example: OK
-        data:
-          type: object
-          additionalProperties: true
-          description: Service output data. Structure varies by service.
-    ServiceEntry:
-      type: object
-      description: A single exported OFBiz service with its metadata and invocation link.
-      properties:
-        name:
+          description: Relationship type.
+          example: self
+        type:
           type: string
-          description: The service name.
-          example: findProductById
-        description:
-          type: string
-          description: Human-readable description of the service.
-          example: Finds productId(s) corresponding to a product reference.
-        link:
-          $ref: '#/components/schemas/ServiceLink'
-    ErrorResponse:
-      type: object
-      description: Standard error response.
-      properties:
-        statusCode:
-          type: integer
-          description: HTTP status code.
-          example: 400
-        statusDescription:
-          type: string
-          description: Human-readable status description.
-          example: Bad Request
-        errorMessage:
-          type: string
-          description: Detailed error message.
-          example: Invalid input parameters.
+          description: HTTP method for accessing the service.
+          example: get
     ServiceListResponse:
       type: object
       description: API response containing a list of exported services.
@@ -247,32 +214,65 @@ components:
           description: Array of exported service entries.
           items:
             $ref: '#/components/schemas/ServiceEntry'
-    ServiceLink:
+    ServiceEntry:
       type: object
-      description: Hypermedia link to a service endpoint.
+      description: A single exported OFBiz service with its metadata and invocation link.
       properties:
-        href:
+        name:
           type: string
-          format: uri
-          description: URL to invoke the service.
-          example: https://localhost:8443/rest/services/findProductById
-        rel:
+          description: The service name.
+          example: findProductById
+        description:
           type: string
-          description: Relationship type.
-          example: self
-        type:
+          description: Human-readable description of the service.
+          example: Finds productId(s) corresponding to a product reference.
+        link:
+          $ref: '#/components/schemas/ServiceLink'
+    ServiceResponse:
+      type: object
+      description: Standard API response from an OFBiz service invocation.
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code.
+          example: 200
+        statusDescription:
           type: string
-          description: HTTP method for accessing the service.
-          example: get
+          description: Human-readable status description.
+          example: OK
+        successMessage:
+          type: string
+          description: Success message if applicable.
+          example: OK
+        data:
+          type: object
+          additionalProperties: true
+          description: Service output data. Structure varies by service.
+    ErrorResponse:
+      type: object
+      description: Standard error response.
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code.
+          example: 400
+        statusDescription:
+          type: string
+          description: Human-readable status description.
+          example: Bad Request
+        errorMessage:
+          type: string
+          description: Detailed error message.
+          example: Invalid input parameters.
   responses:
-    InternalServerError:
-      description: Internal server error.
+    BadRequest:
+      description: Bad request - invalid input parameters.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication token.
+    InternalServerError:
+      description: Internal server error.
       content:
         application/json:
           schema:
@@ -283,8 +283,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    BadRequest:
-      description: Bad request - invalid input parameters.
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
       content:
         application/json:
           schema:
