@@ -106,6 +106,12 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/apache-ofbiz/refs/heads/main/json-schema/apache-ofbiz-service-response-schema.json
 common:
+- type: Plans
+  url: plans/apache-ofbiz-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/apache-ofbiz-rate-limits.yml
+- type: FinOps
+  url: finops/apache-ofbiz-finops.yml
 - type: SecurityPolicy
   url: https://github.com/apache/ofbiz-framework/blob/trunk/SECURITY.md
 - type: CodeOfConduct
