@@ -94,7 +94,48 @@ paths:
         delay: 0
         dispatcher: FALLBACK
 components:
+  responses:
+    InternalServerError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Unauthorized:
+      description: Unauthorized - missing or invalid authentication token.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
   schemas:
+    RefreshRequest:
+      type: object
+      description: Request body for token refresh.
+      required:
+      - refresh_token
+      properties:
+        refresh_token:
+          type: string
+          description: The refresh token previously issued by /auth/token.
+          example: dGhpc19pc19hX3JlZnJlc2hfdG9rZW4
+    TokenResponse:
+      type: object
+      description: Standard API response containing JWT token data.
+      properties:
+        statusCode:
+          type: integer
+          description: HTTP status code.
+          example: 200
+        statusDescription:
+          type: string
+          description: Human-readable status description.
+          example: OK
+        successMessage:
+          type: string
+          description: Success message from the server.
+          example: Token granted.
+        data:
+          $ref: '#/components/schemas/TokenData'
     TokenData:
       type: object
       description: JWT token data returned after successful authentication.
@@ -115,16 +156,6 @@ components:
           type: string
           description: Refresh token for obtaining new access tokens.
           example: dGhpc19pc19hX3JlZnJlc2hfdG9rZW4
-    RefreshRequest:
-      type: object
-      description: Request body for token refresh.
-      required:
-      - refresh_token
-      properties:
-        refresh_token:
-          type: string
-          description: The refresh token previously issued by /auth/token.
-          example: dGhpc19pc19hX3JlZnJlc2hfdG9rZW4
     ErrorResponse:
       type: object
       description: Standard error response.
@@ -141,37 +172,6 @@ components:
           type: string
           description: Detailed error message.
           example: Invalid input parameters.
-    TokenResponse:
-      type: object
-      description: Standard API response containing JWT token data.
-      properties:
-        statusCode:
-          type: integer
-          description: HTTP status code.
-          example: 200
-        statusDescription:
-          type: string
-          description: Human-readable status description.
-          example: OK
-        successMessage:
-          type: string
-          description: Success message from the server.
-          example: Token granted.
-        data:
-          $ref: '#/components/schemas/TokenData'
-  responses:
-    InternalServerError:
-      description: Internal server error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
-    Unauthorized:
-      description: Unauthorized - missing or invalid authentication token.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
   securitySchemes:
     basicAuth:
       type: http
