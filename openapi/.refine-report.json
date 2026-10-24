@@ -1,22 +1,19 @@
 {
   "provider": "apache-ofbiz",
   "sources": [
-    "_original/apache-ofbiz-rest-api-openapi.yaml"
+    "_original/apache-ofbiz-openapi.json"
   ],
   "outputs": [
-    "apache-ofbiz-authentication-api-openapi.yml",
-    "apache-ofbiz-services-api-openapi.yml"
+    "apache-ofbiz-queues-api-openapi.yml",
+    "apache-ofbiz-status-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
-    "apache-ofbiz-rest-api-openapi.yaml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
-    "apis.yml register: already-registered"
+    "apache-ofbiz-openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "apis.yml register: written (+2 apis, 2 total)"
   ],
-  "skipped": [
-    "apache-ofbiz-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "apache-ofbiz-services-api-openapi.yml: previously refined output, superseded by openapi/_original/"
-  ]
+  "skipped": []
 }
